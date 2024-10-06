@@ -1,20 +1,27 @@
 const loginForm = document.querySelector("#login-form");
-//  <div id="login-form">
-// <input type="text" placeholder="What's your name?" />
-// <button>Log In</button>
-// </div> element를 끌어옴 
-const loginInput = loginForm.querySelector("input");
-const loginButton = loginForm.querySelector("button");
-//div 안에서 각각 input과 button을 끌어옴. loginForm 안에서 찾을 수 있었음 
-// (html이라는 큰 범위가 아니어도!)
+const loginInput = document.querySelector("#login-form input");
+const greeting = document.querySelector("#greeting")
+const link = document.querySelector("a");
 
-// const loginInput = document.querySelector("#login-form input");
-// const loginButton = document.querySelector("#login-form button");
-//아래로 변경 가능 
+const HIDDEN_CLASSNAME = "hidden";
 
-function LoginBtnClick () {
+function LoginSubmit(event) {
+    event.preventDefault();
+    loginForm.classList.add(HIDDEN_CLASSNAME);
+    const username = loginInput.value;
+    //greeting.innerText = "hello " + username;
+    greeting.innerText = `hello ${username}`;
+    greeting.classList.remove(HIDDEN_CLASSNAME)
     console.log(username);
-
 }
 
-loginButton.addEventListener("click",LoginBtnClick)
+function handleLinkClick(event){
+    event.preventDefault();
+    console.log(event);
+    alert("clicked!");
+}
+
+loginForm.addEventListener("submit",LoginSubmit);
+link.addEventListener("click", handleLinkClick);
+
+//handleLinkClick({information about the event that just happened})
