@@ -15,14 +15,7 @@ function LoginSubmit(event) {
     console.log(username);
 }
 
-function handleLinkClick(event){
-    event.preventDefault();
-    console.log(event);
-    alert("clicked!");
-}
-
 loginForm.addEventListener("submit",LoginSubmit);
-
 
 function paintGreetings(){
     greeting.classList.remove(HIDDEN_CLASSNAME)
