@@ -8,24 +8,47 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         function App(){
-            const [minutes, setMinutes] = React.useState(); {/* ()안에는 default 값, 비워둬도 됨  / useState는 array를 제공하고, [현재값(데이터), modifier 함수] */} 
+            const [amount, setAmount] = React.useState(); {/* ()안에는 default 값, 비워둬도 됨  / useState는 array를 제공하고, [현재값(데이터), modifier 함수] */} 
+            const [flipped, setFlipped] = React.useState(false);
             const onChange = (event) => {
-                setMinutes(event.targer.value);
+                setAmount(event.target.value);
             };
+            const reset = () => setAmount(0); //reset 함수 정의 
+            const onFlip = () => {
+                reset();
+                setFlipped((current) => !current);
+            }; //false면 true, true면 false 값을 보내줄 수 있도록 함 ! 
             return (
                 <div>
                     <h1>Super Converter</h1>
-                    <label htmlFor="minutes">Minutes</label> {/* hmtl에서 쓰던 For을 쓰기 위해서는 htmlFor을 써야 함 */}
-                    <input 
-                    value={minutes}
-                    id="minutes" 
-                    placeholder="Minutes" 
-                    type="number" 
-                    onChange={onChange} /*사용자가 value를 입력했을 때 change를 인지하기 위해 넣는 이벤트 change*/
-                    />
+                    <div>
+                        <label htmlFor="minutes">Minutes</label> {/* hmtl에서 쓰던 For을 쓰기 위해서는 htmlFor을 써야 함 */}
+                        <input 
+                        value={flipped ? amount*60 : amount} //flipped일 때 시 단위로 나오게 함 
+                        id="minutes" 
+                        placeholder="Minutes" 
+                        type="number" 
+                        onChange={onChange} /*사용자가 value를 입력했을 때 change를 인지하기 위해 넣는 이벤트 change*/
+                        disabled={flipped === true}
+                        />
+                    </div>
                      {/*ReactJS에서 input의 value는 우리가 통제할 수 없음 그래서, 현재값과 modifier 함수를 주고 수정함 */} 
-                     <label htmlFor="hours">Hours</label>
-                    <input id="hours" placeholder="Hours" type="number" />
+                    <div>
+                        {" "}
+                        <label htmlFor="hours">Hours</label>
+                        <input 
+                            value={flipped ? amount : Math.round(amount/60)} // flipped 상태일 때만 변환된 단위로 나타내기 
+                            id="hours" 
+                            placeholder="Hours" 
+                            type="number"  //hours에는 onchange 이벤트를 안 해뒀기 때문에 입력창에서  value 값 바뀌지 않음 
+                            disabled={flipped === false}
+                            onChange={onChange}
+                        />
+                    </div>
+                    <button onClick={reset}> Reset </button>
+                    <button onClick={onFlip}>
+                        {flipped ? "Turn back" : "flipped"}
+                    </button>
                 </div>
             );
             }
