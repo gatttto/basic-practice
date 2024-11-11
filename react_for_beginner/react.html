@@ -7,9 +7,10 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
-        function Btn({text}){ {/* props는 btn 함수가 전달받는 첫번째이자 유일한 인자 */}
+        function Btn({text, changeValue}){ {/* props는 btn 함수가 전달받는 첫번째이자 유일한 인자 */}
             return (
                 <button
+                onClick={changeValue}
                 style={{
                     backgroundColor: "tomato",
                     color:"white",
@@ -27,11 +28,16 @@
                 <button>Confirm </button>
             );
         }
+        const MemorizedBtn = React.memo(Btn);
         function App(){
+            const [value, setValue] = React.useState("ave your contents");
+            const changeValue = () => setValue("revert changes");
             return (
                 <div>
-                <Btn text="save your contents"/> {/*함수형 컴포넌트, 함수를 불러서 <>속 인자를 넣어주는 것  */}
-                <Btn text="confirm"/> 
+                <MemorizedBtn text={value} changeValue={changeValue}/> {/*함수형 컴포넌트, 함수를 불러서 <>속 인자를 넣어주는 것  */}
+                {/* onClick={changeValue}는 실제로 eventListner을 실행하는 게 아님, Btn에 props를 넣는 것*/}
+                <MemorizedBtn text="confirm"/> 
+                {/*emorizedBtn text={value} changeValue={changeValue}/> 는 prop이 변경됨, 하지만 그 밑에 줄은 prop이 변경되지 않기에 rerender 되지 않음  */}
                 </div>
             );
         }
