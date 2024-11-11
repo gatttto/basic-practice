@@ -3,26 +3,24 @@
     <body>
         <div id="root"></div>
     </body>
-    <script src="https://www.unpkg.com/react@18.3.1/umd/react.production.min.js"></script> 
-    <script src="https://www.unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script> 
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         const root = document.getElementById("root");
-        let counter =0;
-        function countUp() {
-            counter = counter +1;
-            render(); //rerendering 
-        }
-        function render(){
-            ReactDOM.render(<Container />, root);
-        }
-        const Container = () => ( //react element가 h3과 button을 담고 있음 / eventListner의 역할을 해줌 
-            <div>
-                <h3>Total clicks: {counter}</h3>
-                <button>{countUp}Click me </button>
-            </div>
-        );
-        render(); // root 안에 btn을 render 하고 있음 
+        function App(){
+            const [counter, setCounter] = React.useState(0); //counter 역할 
+            const onClick = () => {
+                setCounter((current) => current + 1); 
+            };
+            return (
+                <div>
+                    <h3>Total clicks: {counter}</h3>
+                    <button onClick={onClick}>Click me</button>
+                </div>
+            );
+            }
+        ReactDOM.render(<App />, root); // root 안에 btn을 render 하고 있음 
         //const countUp 랑 container은 함수이기에 바로 실행되지 않고, 코드가 실행되면 reactDOM줄이 가장 먼저 실행됨ㄷ 
     </script>
 </html>
-
