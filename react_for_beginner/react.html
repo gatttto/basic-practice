@@ -7,16 +7,25 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
-        const root = document.getElementById("root");
         function App(){
-            const [counter, setCounter] = React.useState(0); //counter 역할 
-            const onClick = () => {
-                setCounter((current) => current + 1); 
+            const [minutes, setMinutes] = React.useState(); {/* ()안에는 default 값, 비워둬도 됨  / useState는 array를 제공하고, [현재값(데이터), modifier 함수] */} 
+            const onChange = (event) => {
+                setMinutes(event.targer.value);
             };
             return (
                 <div>
-                    <h3>Total clicks: {counter}</h3>
-                    <button onClick={onClick}>Click me</button>
+                    <h1>Super Converter</h1>
+                    <label htmlFor="minutes">Minutes</label> {/* hmtl에서 쓰던 For을 쓰기 위해서는 htmlFor을 써야 함 */}
+                    <input 
+                    value={minutes}
+                    id="minutes" 
+                    placeholder="Minutes" 
+                    type="number" 
+                    onChange={onChange} /*사용자가 value를 입력했을 때 change를 인지하기 위해 넣는 이벤트 change*/
+                    />
+                     {/*ReactJS에서 input의 value는 우리가 통제할 수 없음 그래서, 현재값과 modifier 함수를 주고 수정함 */} 
+                     <label htmlFor="hours">Hours</label>
+                    <input id="hours" placeholder="Hours" type="number" />
                 </div>
             );
             }
