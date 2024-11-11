@@ -7,52 +7,35 @@
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
+        function Btn({text}){ {/* props는 btn 함수가 전달받는 첫번째이자 유일한 인자 */}
+            return (
+                <button
+                style={{
+                    backgroundColor: "tomato",
+                    color:"white",
+                    padding:"10px, 20px",
+                    borderRadius: 10,
+                    border: 0
+                }}
+                >
+                {text}
+                </button>
+            );
+        }
+        function ConfirmBtn(){
+            return (
+                <button>Confirm </button>
+            );
+        }
         function App(){
-            const [amount, setAmount] = React.useState(); {/* ()안에는 default 값, 비워둬도 됨  / useState는 array를 제공하고, [현재값(데이터), modifier 함수] */} 
-            const [flipped, setFlipped] = React.useState(false);
-            const onChange = (event) => {
-                setAmount(event.target.value);
-            };
-            const reset = () => setAmount(0); //reset 함수 정의 
-            const onFlip = () => {
-                reset();
-                setFlipped((current) => !current);
-            }; //false면 true, true면 false 값을 보내줄 수 있도록 함 ! 
             return (
                 <div>
-                    <h1>Super Converter</h1>
-                    <div>
-                        <label htmlFor="minutes">Minutes</label> {/* hmtl에서 쓰던 For을 쓰기 위해서는 htmlFor을 써야 함 */}
-                        <input 
-                        value={flipped ? amount*60 : amount} //flipped일 때 시 단위로 나오게 함 
-                        id="minutes" 
-                        placeholder="Minutes" 
-                        type="number" 
-                        onChange={onChange} /*사용자가 value를 입력했을 때 change를 인지하기 위해 넣는 이벤트 change*/
-                        disabled={flipped === true}
-                        />
-                    </div>
-                     {/*ReactJS에서 input의 value는 우리가 통제할 수 없음 그래서, 현재값과 modifier 함수를 주고 수정함 */} 
-                    <div>
-                        {" "}
-                        <label htmlFor="hours">Hours</label>
-                        <input 
-                            value={flipped ? amount : Math.round(amount/60)} // flipped 상태일 때만 변환된 단위로 나타내기 
-                            id="hours" 
-                            placeholder="Hours" 
-                            type="number"  //hours에는 onchange 이벤트를 안 해뒀기 때문에 입력창에서  value 값 바뀌지 않음 
-                            disabled={flipped === false}
-                            onChange={onChange}
-                        />
-                    </div>
-                    <button onClick={reset}> Reset </button>
-                    <button onClick={onFlip}>
-                        {flipped ? "Turn back" : "flipped"}
-                    </button>
+                <Btn text="save your contents"/> {/*함수형 컴포넌트, 함수를 불러서 <>속 인자를 넣어주는 것  */}
+                <Btn text="confirm"/> 
                 </div>
             );
-            }
-        ReactDOM.render(<App />, root); // root 안에 btn을 render 하고 있음 
-        //const countUp 랑 container은 함수이기에 바로 실행되지 않고, 코드가 실행되면 reactDOM줄이 가장 먼저 실행됨ㄷ 
+        }
+        const root = document.getElementById("root");
+        ReactDOM.render(<App />, root);
     </script>
 </html>
